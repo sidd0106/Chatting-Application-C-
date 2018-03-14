@@ -43,6 +43,9 @@ private:
 	void SendStringRR(int ID, std::string & _string);
 	void SendStringRL(int ID, std::string & _string);
 	void SendStringRU(int ID, std::string & _string);
+	void SendStringRC(int ID, std::string & _string);
+	void SendStringRRC(int ID, std::string & _string);
+	void SendStringSCM(int ID, std::string & _string);
 	bool GetString(int ID, std::string & _string);
 
 	bool ProcessPacket(int ID, PacketType _packettype);

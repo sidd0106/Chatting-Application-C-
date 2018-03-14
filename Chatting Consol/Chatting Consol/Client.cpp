@@ -1,5 +1,12 @@
 #include "Client.h"
 
+void Client::set_id(int id){
+	clientptr->global_id = id;
+}
+int Client::get_id(){
+	return clientptr->global_id;
+}
+
 bool Client::ProcessPacketType(PacketType _PacketType)
 {
 	switch (_PacketType)
@@ -34,6 +41,18 @@ bool Client::ProcessPacketType(PacketType _PacketType)
 												   return false;
 											   break;
 	}
+	case PacketType::ReplyChat: //If PacketType is a chat message PacketType
+	{
+									std::string Message; //string to store our message we received
+									if (!GetString(Message)) //Get the chat message and store it in variable: Message
+										return false; //If we do not properly get the chat message, return false
+									//cout << Message << "lkl" << endl;
+									int id = stoi(Message);
+									//cout << id << endl;
+									clientptr->set_id(id);
+									//cout << clientptr << " " << "Lokesh" << endl;
+									break;
+	}
 	case PacketType::FileTransfer_EndOfFile:
 	{
 											   std::cout << "File transfer completed. File received." << std::endl;
@@ -61,12 +80,23 @@ bool Client::ProcessPacketType(PacketType _PacketType)
 									   return false; //If we do not properly get the chat message, return false
 								   std::cout << Message << std::endl; //Display the message to the user
 								   if (Message == "Incorrect Username/Password"){
-									   cout << "Hello!";
+									   //cout << "Hello!";
 
 								   }
 								   else
 									   clientptr->Log_status = true;
 								   break;
+	}
+	case PacketType::SingleChatMessage:
+	{
+										  std::string Message; //string to store our message we received
+										  if (!GetString(Message)) //Get the chat message and store it in variable: Message
+											  return false; //If we do not properly get the chat message, return false
+										  //int id = stoi(Message);
+										  cout << Message<<endl;
+										 // cout << "Lokesh" << endl;
+										  break;
+
 	}
 	default: //If PacketType type is not accounted for
 		std::cout << "Unrecognized PacketType: " << (int32_t)_PacketType << std::endl; //Display that PacketType was not found
@@ -132,6 +162,26 @@ bool Client::RequestLogin(string user){
 	return true;
 }
 
+bool Client::RequestChat(string id){
+	//cout << "Requesting for user to chat\n";
+	//std::cout << "Requesting For Registration " << user << std::endl;
+	if (!SendPacketType(PacketType::RequestChat)) //send file transfer request PacketType
+		return false;
+	if (!SendString(id, false)) //send file name
+		return false;
+	return true;
+}
+
+bool Client::ReplyChat(string id){
+	//cout << "Replying for user to chat\n";
+	//std::cout << "Requesting For Registration " << user << std::endl;
+	if (!SendPacketType(PacketType::ReplyChat)) //send file transfer request PacketType
+		return false;
+	if (!SendString(id, false)) //send file name
+		return false;
+	return true;
+}
+
 Client::Client(std::string IP, int PORT)
 {
 	//Winsock Startup
@@ -158,7 +208,7 @@ bool Client::Connect()
 		return false;
 	}
 
-	std::cout << "Welcome to APM ChatRoom!" << std::endl;
+	std::cout << "Welcome to RLS ChatRoom!" << std::endl;
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThread, NULL, NULL, NULL); //Create the client thread that will receive any data that the server sends.
 	return true;
 }

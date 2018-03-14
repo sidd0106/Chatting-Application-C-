@@ -1,17 +1,21 @@
-﻿Build started 11-03-2018 01:24:42.
-     1>Project "C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\New folder\ChatClient\ChatClient\ChatClient.vcxproj" on node 2 (Build target(s)).
+﻿Build started 14-03-2018 15:55:52.
+     1>Project "C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\Till Single Chat 2\ChatClient\ChatClient\ChatClient.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"-lpthread" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
          Source.cpp
+     1>c:\users\lokesh\documents\visual studio 2013\projects\final\new folder\till single chat 2\chatclient\chatclient\source.cpp(62): warning C4101: 'e' : unreferenced local variable
+     1>c:\users\lokesh\documents\visual studio 2013\projects\final\new folder\till single chat 2\chatclient\chatclient\source.cpp(65): warning C4101: 'e' : unreferenced local variable
+     1>c:\users\lokesh\documents\visual studio 2013\projects\final\new folder\till single chat 2\chatclient\chatclient\source.cpp(147): warning C4101: 'e' : unreferenced local variable
+     1>c:\users\lokesh\documents\visual studio 2013\projects\final\new folder\till single chat 2\chatclient\chatclient\source.cpp(150): warning C4101: 'e' : unreferenced local variable
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\New folder\ChatClient\Debug\ChatClient.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\New folder\ChatClient\Debug\ChatClient.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\New folder\ChatClient\Debug\ChatClient.lib" /MACHINE:X86 Debug\Client.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\Till Single Chat 2\ChatClient\Debug\ChatClient.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\Till Single Chat 2\ChatClient\Debug\ChatClient.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\Till Single Chat 2\ChatClient\Debug\ChatClient.lib" /MACHINE:X86 Debug\Client.obj
          Debug\Packet.obj
          Debug\PacketManager.obj
          Debug\SendGetMethods.obj
          Debug\Source.obj
-         ChatClient.vcxproj -> C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\New folder\ChatClient\Debug\ChatClient.exe
-     1>Done Building Project "C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\New folder\ChatClient\ChatClient\ChatClient.vcxproj" (Build target(s)).
+         ChatClient.vcxproj -> C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\Till Single Chat 2\ChatClient\Debug\ChatClient.exe
+     1>Done Building Project "C:\Users\LOKESH\Documents\Visual Studio 2013\Projects\final\New folder\Till Single Chat 2\ChatClient\ChatClient\ChatClient.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.49
+Time Elapsed 00:00:07.14

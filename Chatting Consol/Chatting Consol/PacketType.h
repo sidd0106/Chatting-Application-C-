@@ -9,5 +9,11 @@ enum class PacketType
 	RegisterPacket,
 	LoginPacket,
 	ReplyRegister,
-	ReplyLogin
+	ReplyLogin,
+	RequestUser,
+	ReplyUserRequest,
+	RequestChat,
+	ReplyChat,
+	SingleChatMessage,
+	DisconnectPacket
 };

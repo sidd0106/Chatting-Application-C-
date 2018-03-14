@@ -2,6 +2,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #pragma comment(lib,"ws2_32.lib") //Required for WinSock
+#include<conio.h>
 #include <WinSock2.h> //For win sockets
 #include <string> //For std::string
 #include <iostream> //For std::cout, std::endl, std::cin.getline
@@ -22,6 +23,7 @@ public: //Public functions
 	bool Connect();
 	bool Reg_status = false;
 	bool Log_status = false;
+	bool Room_status = false;
 	bool user_status = false;
 	bool SendString(std::string & _string, bool IncludePacketType = true);
 	bool CloseConnection();
@@ -30,6 +32,8 @@ public: //Public functions
 	bool RequestLogin(string user);
 	bool RequestUser(string user);
 	bool id_check(int id);
+	void id_print();
+	wchar_t *convertCharArrayToLPCWSTR(const char* charArray);
 	//int counter = 0;
 private: //Private functions
 	bool ProcessPacketType(PacketType _PacketType);

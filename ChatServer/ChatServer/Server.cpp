@@ -95,6 +95,69 @@ bool Server::ProcessPacket(int ID, PacketType _packettype)
 									  std::cout << "Processed chat message packet from user ID: " << ID <<std::endl;
 									  break;
 	}
+	case PacketType::RequestChat:
+	{
+								string message;
+								if (!GetString(ID, message)) //Get the chat message and store it in variable: Message
+									return false;
+								cout << message << endl;
+								string message1 = "";
+								message1 = message1 + to_string(ID)+" ";
+								int id = stoi(message);
+								string temp = data_ptr->retrieve(id);
+								//cout << temp << endl;
+								temp = temp +"!!"+ data_ptr->retrieve_pass(temp);
+								message1 += temp + " extra";
+								SendStringRC(id,message1);
+								Sleep(20);
+								cout << "YE WALA";
+								break;
+								
+	}
+	case PacketType::ReplyChat:
+	{
+									string message;
+									if (!GetString(ID, message)) //Get the chat message and store it in variable: Message
+										return false;
+									cout << message << endl;
+									string message1 = "";
+									message1 = message1 + to_string(ID) + " ";
+									int id = stoi(message);
+									string temp = data_ptr->retrieve(id);
+									//cout << temp << endl;
+									//temp = temp + "!!" + data_ptr->retrieve_pass(temp);
+									//message1 += temp + " extra";
+									SendStringRRC(id, message1);
+									Sleep(20);
+									cout << "YE WALA";
+									break;
+
+	}
+	case PacketType::SingleChatMessage:
+	{
+										  string message;
+										  if (!GetString(ID, message)) //Get the chat message and store it in variable: Message
+											  return false;
+										  //cout << message << endl;
+										  string id;
+										  if (!GetString(ID, id)) //Get the chat message and store it in variable: Message
+											  return false;
+										  int Id = stoi(id);
+										  
+										  string temp = data_ptr->retrieve(ID);
+										  temp = temp + ": " + message;
+										  if (data_ptr->get_data(Id))
+											  SendStringSCM(Id, temp);
+										  else{
+											  //DisconnectClient(ID);
+											  //cout << "What??" << endl;
+											  return false;
+										  }
+										  Sleep(20);
+										  break;
+
+	
+	}
 	case PacketType::RequestUser:
 	{
 									string users="";
@@ -168,7 +231,7 @@ bool Server::ProcessPacket(int ID, PacketType _packettype)
 									if (!GetString(ID, message)) //Get the chat message and store it in variable: Message
 										return false; //If we do not properly get the chat message, return false
 									//Next we need to send the message out to each user
-									if (!data_ptr->login_check(message)){
+									if (!data_ptr->login_check(ID,message)){
 										string Err = "Incorrect Username/Password";
 										SendStringRL(ID, Err);
 
@@ -262,6 +325,7 @@ void Server::PacketSenderThread() //Thread for all outgoing packets
 void Server::DisconnectClient(int ID) //Disconnects a client and cleans up socket if possible
 {
 	std::lock_guard<std::mutex> lock(connectionMgr_mutex); //Lock connection manager mutex since we are possible removing element(s) from the vector
+	data_ptr->set_data(ID);
 	if (connections[ID]->ActiveConnection == false) //If connection has already been disconnected?
 	{
 		return; //return - this should never happen, but just in case...

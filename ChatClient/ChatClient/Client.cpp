@@ -6,6 +6,20 @@ bool Client::id_check(int id){
 	}
 	return false;
 }
+
+void Client::id_print(){
+	for (unsigned int i = 0; i < (clientptr->id_store).size(); i++){
+		cout << clientptr->id_store[i]<<"\t";
+	}cout << endl;
+}
+
+wchar_t * Client::convertCharArrayToLPCWSTR(const char* charArray)
+{
+	wchar_t* wString = new wchar_t[4096];
+	MultiByteToWideChar(CP_ACP, 0, charArray, -1, wString, 4096);
+	return wString;
+}
+
 bool Client::ProcessPacketType(PacketType _PacketType)
 {
 	switch (_PacketType)
@@ -20,9 +34,37 @@ bool Client::ProcessPacketType(PacketType _PacketType)
 										  if (Message[i] == ':')
 											  break;
 									  }
-									  if ((clientptr->Reg_status == true || clientptr->Log_status) && i<Message.length()-2 )
+									  if ((clientptr->Reg_status == true || clientptr->Log_status) && i<Message.length()-2  && clientptr->Room_status)
 										  std::cout << Message << std::endl; //Display the message to the user
 									  break;
+	}
+	
+	case PacketType::RequestChat:
+	{
+									std::string Message; //string to store our message we received
+									if (!GetString(Message)) //Get the chat message and store it in variable: Message
+										return false;
+									
+									wchar_t *argg = clientptr->convertCharArrayToLPCWSTR(Message.c_str());
+									SHELLEXECUTEINFO ShRun = { 0 };
+									ShRun.cbSize = sizeof(SHELLEXECUTEINFO);
+									ShRun.fMask = SEE_MASK_NOCLOSEPROCESS;
+									ShRun.hwnd = NULL;
+									ShRun.lpVerb = NULL;
+									ShRun.lpFile = L"C:\\Users\\LOKESH\\Documents\\Visual Studio 2013\\Projects\\final\\New folder\\Till Single Chat 2\\Chatting Consol\\Debug\\Chatting Consol.exe";
+									ShRun.lpParameters = argg;
+									ShRun.lpDirectory = L"C:\\Users\\LOKESH\\Documents\\Visual Studio 2013\\Projects\\final\\New folder\\Till Single Chat 2\\Chatting Consol\\Debug\\";
+									ShRun.nShow = SW_SHOW;
+									ShRun.hInstApp = NULL;
+
+									// Execute the file with the parameters
+									if (!ShellExecuteEx(&ShRun))
+									{
+										// Send error message
+										//AfxMessageBox("Unable to open file!", MB_OK);
+									}
+									break;
+
 	}
 	case PacketType::FileTransferByteBuffer:
 	{
@@ -65,6 +107,7 @@ bool Client::ProcessPacketType(PacketType _PacketType)
 									  std::string Message; //string to store our message we received
 									  if (!GetString(Message)) //Get the chat message and store it in variable: Message
 										  return false; //If we do not properly get the chat message, return false
+									  //cout << Message;
 									  int l = Message.length();
 									  if (l == 0){
 										  cout << "Currently No other user is active" << endl;
@@ -72,30 +115,40 @@ bool Client::ProcessPacketType(PacketType _PacketType)
 									  //counter = 0;
 									 // cout << counter << ": ";
 									  else{
+										  
 										  string id = "";
 										  for (int i = 0; i < l; i++){
 											  if (Message[i] != '!'){
 												  cout << Message[i];
 											  }
-											  else if (Message[i] == '#')
+											  else{
+												  cout << endl;
+											  }
+											  if (Message[i] == '#')
 											  {
 												  i++;
 												  while (i < l){
 													  id += Message[i];
+													  cout << id <<" ";
 													  i++;
 													  if (Message[i] == ' '){
+														 // cout << "\n" << id << "Df"<<endl;
 														  clientptr->id_store.push_back(stoi(id));
+														  //cout << id << "IDDDD";
 														  id = "";
 														  break;
 													  }
 												  }
+
 											  }
 
 										  }
 										  cout << endl;
 									  }
+									  //clientptr->id_print();
 									  break;
 	}
+	
 	case PacketType::ReplyLogin:
 	{
 								   std::string Message; //string to store our message we received
@@ -103,7 +156,7 @@ bool Client::ProcessPacketType(PacketType _PacketType)
 									   return false; //If we do not properly get the chat message, return false
 								   std::cout << Message << std::endl; //Display the message to the user
 								   if (Message == "Incorrect Username/Password"){
-									   cout << "Hello!";
+									   //cout << "Hello!";
 
 								   }
 								   else
@@ -157,7 +210,7 @@ bool Client::RequestFile(std::string FileName)
 }
 
 bool Client::RequestRegister(string user){
-	std::cout << "Requesting For Registration " << user << std::endl;
+	std::cout << "Requesting For Registration " << std::endl;
 	if (!SendPacketType(PacketType::RegisterPacket)) //send file transfer request PacketType
 		return false;
 	if (!SendString(user, false)) //send file name
@@ -209,7 +262,7 @@ bool Client::Connect()
 		return false;
 	}
 
-	std::cout << "Welcome to APM ChatRoom!" << std::endl;
+	std::cout << "Welcome to RLS ChatBOX!" << std::endl;
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThread, NULL, NULL, NULL); //Create the client thread that will receive any data that the server sends.
 	return true;
 }

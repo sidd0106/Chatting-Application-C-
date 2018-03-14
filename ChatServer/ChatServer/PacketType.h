@@ -11,5 +11,9 @@ enum class PacketType
 	ReplyRegister,
 	ReplyLogin,
 	RequestUser,
-	ReplyUserRequest
+	ReplyUserRequest,
+	RequestChat,
+	ReplyChat,
+	SingleChatMessage,
+	DisconnectPacket
 };

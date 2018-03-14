@@ -18,12 +18,17 @@ public: //Public functions
 	bool Connect();
 	bool Reg_status = false;
 	bool Log_status = false;
+	int global_id;
 	bool SendString(std::string & _string, bool IncludePacketType = true);
+	bool SendStringID(bool IncludePacketType = true);
 	bool CloseConnection();
 	bool RequestFile(std::string FileName);
 	bool RequestRegister(string user);
 	bool RequestLogin(string user);
-
+	bool RequestChat(string);
+	bool ReplyChat(string);
+	void set_id(int);
+	int get_id();
 private: //Private functions
 	bool ProcessPacketType(PacketType _PacketType);
 	static void ClientThread();

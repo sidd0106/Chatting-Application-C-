@@ -14,6 +14,30 @@ namespace PS //Packet Structures Namespace
 	private:
 		std::string message;
 	};
+	class SingleChatMessage
+	{
+	public:
+		SingleChatMessage(std::string);
+		Packet toPacket(); //Converts ChatMessage to packet
+	private:
+		std::string message;
+	};
+	class ReplyChat
+	{
+	public:
+		ReplyChat(std::string);
+		Packet toPacket(); //Converts ReplyChat to packet
+	private:
+		std::string message;
+	};
+	class RequestChat
+	{
+	public:
+		RequestChat(std::string);
+		Packet toPacket(); //Converts RequestChat to packet
+	private:
+		std::string message;
+	};
 	class FileDataBuffer //Used when sending a file
 	{
 	public:
@@ -24,7 +48,7 @@ namespace PS //Packet Structures Namespace
 	class ReplyRegister{
 	public:
 		ReplyRegister(std::string);
-		Packet toPacket(); //Converts ChatMessage to packet
+		Packet toPacket(); //Converts ReplyRegister to packet
 	private:
 		std::string message;
 	};
@@ -38,7 +62,7 @@ namespace PS //Packet Structures Namespace
 	class ReplyUserRequest{
 	public:
 		ReplyUserRequest(std::string);
-		Packet toPacket(); //Converts ChatMessage to packet
+		Packet toPacket(); //Converts ReplyUserRequest to packet
 	private:
 		std::string message;
 	};

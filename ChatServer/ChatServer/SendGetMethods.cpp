@@ -67,6 +67,24 @@ void Server::SendStringRU(int ID, std::string & _string)
 	connections[ID]->pm.Append(message.toPacket());
 }
 
+void Server::SendStringRC(int ID, std::string & _string)
+{
+	PS::RequestChat message(_string);
+	connections[ID]->pm.Append(message.toPacket());
+}
+
+void Server::SendStringRRC(int ID, std::string & _string)
+{
+	PS::ReplyChat message(_string);
+	connections[ID]->pm.Append(message.toPacket());
+}
+
+void Server::SendStringSCM(int ID, std::string & _string)
+{
+	PS::SingleChatMessage message(_string);
+	connections[ID]->pm.Append(message.toPacket());
+}
+
 bool Server::GetString(int ID, std::string & _string)
 {
 	int32_t bufferlength; //Holds length of the message

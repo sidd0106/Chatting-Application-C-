@@ -14,11 +14,56 @@ namespace PS
 	ReplyUserRequest::ReplyUserRequest(std::string msg){
 		message = msg;
 	}
+	RequestChat::RequestChat(std::string msg){
+		message = msg;
+	}
 	Packet ChatMessage::toPacket()
 	{
 		const int packetsize = sizeof(int32_t)* 2 + message.size()*sizeof(char); //Calculate total size of buffer for packet contents
 		char * buffer = new char[packetsize]; //Create buffer big enough to hold all info for message
 		int32_t packettype = htonl((int32_t)PacketType::ChatMessage); //Convert packet type (int32_t) to network byte order
+		int32_t messagesize = htonl(message.size()); //Convert message size (int32_t) to network byte order
+		memcpy(buffer, &packettype, sizeof(int32_t)); //Copy Packet Type to first 4 bytes of buffer
+		memcpy(buffer + sizeof(int32_t), &messagesize, sizeof(int32_t)); //Copy size to next 4 bytes of buffer
+		memcpy(buffer + sizeof(int32_t)* 2, message.c_str(), message.size()*sizeof(char)); //Copy message to fill the rest of the buffer
+		Packet p(buffer, packetsize); //Create packet to be returned
+		return p;
+	}
+	ReplyChat::ReplyChat(std::string msg){
+		message = msg;
+	}
+	Packet ReplyChat::toPacket()
+	{
+		const int packetsize = sizeof(int32_t)* 2 + message.size()*sizeof(char); //Calculate total size of buffer for packet contents
+		char * buffer = new char[packetsize]; //Create buffer big enough to hold all info for message
+		int32_t packettype = htonl((int32_t)PacketType::ReplyChat); //Convert packet type (int32_t) to network byte order
+		int32_t messagesize = htonl(message.size()); //Convert message size (int32_t) to network byte order
+		memcpy(buffer, &packettype, sizeof(int32_t)); //Copy Packet Type to first 4 bytes of buffer
+		memcpy(buffer + sizeof(int32_t), &messagesize, sizeof(int32_t)); //Copy size to next 4 bytes of buffer
+		memcpy(buffer + sizeof(int32_t)* 2, message.c_str(), message.size()*sizeof(char)); //Copy message to fill the rest of the buffer
+		Packet p(buffer, packetsize); //Create packet to be returned
+		return p;
+	}
+	SingleChatMessage::SingleChatMessage(std::string msg){
+		message = msg;
+	}
+	Packet SingleChatMessage::toPacket()
+	{
+		const int packetsize = sizeof(int32_t)* 2 + message.size()*sizeof(char); //Calculate total size of buffer for packet contents
+		char * buffer = new char[packetsize]; //Create buffer big enough to hold all info for message
+		int32_t packettype = htonl((int32_t)PacketType::SingleChatMessage); //Convert packet type (int32_t) to network byte order
+		int32_t messagesize = htonl(message.size()); //Convert message size (int32_t) to network byte order
+		memcpy(buffer, &packettype, sizeof(int32_t)); //Copy Packet Type to first 4 bytes of buffer
+		memcpy(buffer + sizeof(int32_t), &messagesize, sizeof(int32_t)); //Copy size to next 4 bytes of buffer
+		memcpy(buffer + sizeof(int32_t)* 2, message.c_str(), message.size()*sizeof(char)); //Copy message to fill the rest of the buffer
+		Packet p(buffer, packetsize); //Create packet to be returned
+		return p;
+	}
+	Packet RequestChat::toPacket()
+	{
+		const int packetsize = sizeof(int32_t)* 2 + message.size()*sizeof(char); //Calculate total size of buffer for packet contents
+		char * buffer = new char[packetsize]; //Create buffer big enough to hold all info for message
+		int32_t packettype = htonl((int32_t)PacketType::RequestChat); //Convert packet type (int32_t) to network byte order
 		int32_t messagesize = htonl(message.size()); //Convert message size (int32_t) to network byte order
 		memcpy(buffer, &packettype, sizeof(int32_t)); //Copy Packet Type to first 4 bytes of buffer
 		memcpy(buffer + sizeof(int32_t), &messagesize, sizeof(int32_t)); //Copy size to next 4 bytes of buffer

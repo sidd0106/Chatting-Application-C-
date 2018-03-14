@@ -61,9 +61,26 @@ bool Client::SendString(std::string & _string, bool IncludePacketType)
 {
 	if (IncludePacketType)
 	{
-		if (!SendPacketType(PacketType::ChatMessage)) //Send PacketType type: Chat Message, If sending PacketType type fails...
+		if (!SendPacketType(PacketType::SingleChatMessage)) //Send PacketType type: Chat Message, If sending PacketType type fails...
 			return false; //Return false: Failed to send string
 	}
+	int32_t bufferlength = _string.size(); //Find string buffer length
+	if (!Sendint32_t(bufferlength)) //Send length of string buffer, If sending buffer length fails...
+		return false; //Return false: Failed to send string buffer length
+	if (!sendall((char*)_string.c_str(), bufferlength)) //Try to send string buffer... If buffer fails to send,
+		return false; //Return false: Failed to send string buffer
+	return true; //Return true: string successfully sent
+}
+
+bool Client::SendStringID( bool IncludePacketType)
+{
+	if (IncludePacketType)
+	{
+		if (!SendPacketType(PacketType::SingleChatMessage)) //Send PacketType type: Chat Message, If sending PacketType type fails...
+			return false; //Return false: Failed to send string
+	}
+	string _string = to_string(clientptr->get_id());
+	//cout << _string << "sf"<<endl;;
 	int32_t bufferlength = _string.size(); //Find string buffer length
 	if (!Sendint32_t(bufferlength)) //Send length of string buffer, If sending buffer length fails...
 		return false; //Return false: Failed to send string buffer length
